@@ -1,7 +1,7 @@
 # SorguNeydi
 
 <p align="center">
-  <img src="./docs/images/logo.png" alt="SorguNeydi Logo" width="200" height="auto" />
+  <img src="![Image](https://github.com/user-attachments/assets/91688456-7754-4c84-8782-84fcfc953d5b)" alt="SorguNeydi Logo" width="200" height="auto" />
 </p>
 
 <p align="center">
