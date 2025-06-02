@@ -1,8 +1,6 @@
 # SorguNeydi
 
-<p align="center">
-  <img src="![Image](https://github.com/user-attachments/assets/91688456-7754-4c84-8782-84fcfc953d5b)" alt="SorguNeydi Logo" width="200" height="auto" />
-</p>
+![Image](https://github.com/user-attachments/assets/91688456-7754-4c84-8782-84fcfc953d5b)
 
 <p align="center">
   <strong>Güçlü, Görsel ve Kullanımı Kolay Veritabanı Sorgu Aracı</strong>
