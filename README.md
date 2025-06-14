@@ -209,7 +209,7 @@ npm start
 - Arayüz boşlukları optimize edildi
 - WHERE filtreleme tamamlandı
 
-### Versiyon 1.1.0
+### Versiyon 1.0.0
 - İlk kararlı sürüm
 - PostgreSQL ve MySQL desteği
 - Temel sorgu oluşturma özellikleri
