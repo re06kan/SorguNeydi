@@ -23,7 +23,7 @@
 ### Aşama 4: Basit Görsel Sorgu Oluşturucu (2 hafta)
 - [x] Tablo seçme arayüzü
 - [x] Sütun seçme (SELECT kısmı)
-- [ ] Basit filtreleme (WHERE kısmı)
+- [x] Basit filtreleme (WHERE kısmı)
 - [x] Görsel sorgulardan SQL kodu üretme (sütun seçimi için)
 
 ## Yapılan İyileştirmeler ve Ek Özellikler
@@ -33,11 +33,13 @@
 - [x] PostgreSQL ve MySQL desteği
 - [x] Oracle veritabanı için destek eklendi
 - [x] Material UI ile modern arayüz
+- [x] Responsive tasarım iyileştirmeleri
+- [x] Sorgu temizleme butonu
 
 ## Gelecek İyileştirmeler
 - [ ] Geçmiş sorgu yönetimi
 - [ ] Sorgu sonuçlarını dışa aktarma (CSV, Excel)
-- [ ] Filtreleme, sıralama ve gruplama için görsel arayüz
+- [x] Filtreleme, sıralama ve gruplama için görsel arayüz
 - [ ] Şema bilgilerini görselleştirme
 - [ ] İlişkisel diyagramlar
 
@@ -72,11 +74,11 @@
   - [x] ORDER BY ifadelerini sorguya uygulama
   - [x] Aktif sıralama kriterlerini gösterme
 
-- [ ] SQL Fonksiyonları
-  - [ ] Toplama fonksiyonları (COUNT, SUM, AVG, MIN, MAX)
-  - [ ] Metin işleme fonksiyonları
-  - [ ] Tarih işleme fonksiyonları
-  - [ ] Koşullu ifadeler (CASE WHEN)
+- [x] SQL Fonksiyonları
+  - [x] Toplama fonksiyonları (COUNT, SUM, AVG, MIN, MAX)
+  - [x] Metin işleme fonksiyonları
+  - [x] Tarih işleme fonksiyonları
+  - [x] Koşullu ifadeler (CASE WHEN)
 
 ### Filtre ve Koşullar
 - [x] WHERE koşulları oluşturma
@@ -89,6 +91,7 @@
 - [ ] Otomatik SQL tamamlama
 - [ ] Sorgu geçmişi
 - [ ] Sorguları kaydetme ve yükleme
+- [x] Sorgu temizleme butonu
 
 ### Performans ve Güvenlik
 - [ ] Uzun süren sorgular için zaman aşımı kontrolü
@@ -97,7 +100,7 @@
 - [ ] Hassas sorguların şifrelenmesi
 
 ## Genel Uygulama Özellikleri
-- [ ] Responsive tasarım (mobil uyumluluk)
+- [x] Responsive tasarım (mobil uyumluluk)
 - [ ] Koyu tema desteği
 - [ ] Çok dilli arayüz
 - [ ] Erişilebilirlik iyileştirmeleri

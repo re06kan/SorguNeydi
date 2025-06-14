@@ -36,7 +36,14 @@ const Layout = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Container
+        maxWidth={false}
+        disableGutters
+        sx={{
+          px: { xs: 1, sm: 2 },
+          py: 2
+        }}
+      >
         <Outlet />
       </Container>
     </>

@@ -8,6 +8,7 @@ import {
   IconButton, Menu, Tooltip, TablePagination
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ClearIcon from '@mui/icons-material/Clear';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -47,6 +48,9 @@ const QueryPage = () => {
   // Sayfalama için state'ler
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  // Fonksiyon ifadeleri için state
+  const [functionExpressions, setFunctionExpressions] = useState([]);
 
   // Bağlantıları yükle
   useEffect(() => {
@@ -115,6 +119,14 @@ const QueryPage = () => {
   // Sorgu değişikliği
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
+  };
+
+  // Sorgu temizleme
+  const handleClearQuery = () => {
+    setQuery('');
+    setResults(null);
+    setError(null);
+    setPage(0);
   };
 
   // Sorgu çalıştırma
@@ -499,10 +511,15 @@ const QueryPage = () => {
     setPage(0);
   };
 
+  // Fonksiyon ifadelerini güncelle
+  const handleFunctionExpressionsChange = (newFunctionExpressions) => {
+    setFunctionExpressions(newFunctionExpressions);
+  };
+
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={3}>
-        <Paper sx={{ p: 2, mb: 2 }}>
+    <Grid container spacing={1}>
+      <Grid item xs={12} sm={4} md={3} lg={2.5} xl={2}>
+        <Paper sx={{ p: 1, mb: 1 }}>
           <FormControl fullWidth>
             <InputLabel id="connection-select-label">Veritabanı Bağlantısı</InputLabel>
             <Select
@@ -521,13 +538,13 @@ const QueryPage = () => {
           </FormControl>
         </Paper>
 
-        <Paper sx={{ p: 2, height: '100%' }}>
+        <Paper sx={{ p: 1, height: '100%', overflowY: 'auto', maxHeight: 'calc(100vh - 170px)' }}>
           <Typography variant="h6" gutterBottom>
             Tablolar ve Sütunlar
           </Typography>
 
           {tables.length > 0 ? (
-            <List>
+            <List dense>
               {tables.map((tableName) => (
                 <Accordion key={tableName}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={() => fetchTableColumns(tableName)}>
@@ -556,7 +573,7 @@ const QueryPage = () => {
                                 variant="text"
                                 size="small"
                                 onClick={() => addColumnToQuery(tableName, column.column_name)}
-                                sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+                                sx={{ justifyContent: 'flex-start', textTransform: 'none', p: 0 }}
                               >
                                 {column.column_name}
                               </Button>
@@ -589,7 +606,7 @@ const QueryPage = () => {
         </Menu>
       </Grid>
 
-      <Grid item xs={12} md={9}>
+      <Grid item xs={12} sm={8} md={9} lg={9.5} xl={10}>
         {/* İleri düzey sorgu araçları */}
         <AdvancedQueryTools
           joins={joins}
@@ -609,12 +626,13 @@ const QueryPage = () => {
           orderByColumns={orderByColumns}
           onOrderByChange={setOrderByColumns}
           // Diğer state'ler
-          functionExpressions={[]}
+          functionExpressions={functionExpressions}
+          onFunctionExpressionsChange={handleFunctionExpressionsChange}
         />
 
         {/* Filtre koşulları */}
         {filterConditions.length > 0 && (
-          <Paper sx={{ p: 2, mb: 2 }}>
+          <Paper sx={{ p: 1, mb: 1 }}>
             <Typography variant="subtitle1" gutterBottom>
               Filtre Koşulları
             </Typography>
@@ -632,7 +650,7 @@ const QueryPage = () => {
         )}
 
         {/* Sorgu editörü */}
-        <Paper sx={{ p: 3, mb: 3 }}>
+        <Paper sx={{ p: 2, mb: 1 }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Sorgu Çalıştır
           </Typography>
@@ -640,29 +658,41 @@ const QueryPage = () => {
           <TextField
             label="SQL Sorgunuzu yazın"
             multiline
-            rows={6}
+            rows={4}
             value={query}
             onChange={handleQueryChange}
             fullWidth
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{ mb: 1 }}
             placeholder="SELECT * FROM tablo_adi"
           />
 
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<PlayArrowIcon />}
-            onClick={handleRunQuery}
-            disabled={isLoading || !query.trim() || !selectedConnection}
-          >
-            {isLoading ? 'Çalıştırılıyor...' : 'Sorguyu Çalıştır'}
-          </Button>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<PlayArrowIcon />}
+              onClick={handleRunQuery}
+              disabled={isLoading || !query.trim() || !selectedConnection}
+            >
+              {isLoading ? 'Çalıştırılıyor...' : 'Sorguyu Çalıştır'}
+            </Button>
+
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={<ClearIcon />}
+              onClick={handleClearQuery}
+              disabled={!query.trim() && !results} // Sorgu veya sonuç yoksa devre dışı bırak
+            >
+              Temizle
+            </Button>
+          </Box>
         </Paper>
 
         {/* Sonuçlar */}
         {error && (
-          <Paper sx={{ p: 3, mb: 3, bgcolor: '#fdeded' }}>
+          <Paper sx={{ p: 2, mb: 1, bgcolor: '#fdeded' }}>
             <Typography color="error" variant="subtitle1">
               Hata: {error}
             </Typography>
@@ -670,21 +700,21 @@ const QueryPage = () => {
         )}
 
         {results && (
-          <Paper sx={{ p: 3 }}>
+          <Paper sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom>
               Sonuçlar
             </Typography>
 
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 1 }}>
               <SyntaxHighlighter language="sql" style={materialDark}>
                 {query}
               </SyntaxHighlighter>
             </Box>
 
-            <Divider sx={{ mb: 2 }} />
+            <Divider sx={{ mb: 1 }} />
 
-            <TableContainer>
-              <Table>
+            <TableContainer sx={{ overflowX: 'auto' }}>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     {results.columns.map((column, index) => (
@@ -721,9 +751,10 @@ const QueryPage = () => {
               labelDisplayedRows={
                 ({ from, to, count }) => `${from}-${to} / ${count}`
               }
+              sx={{ mt: 1 }}
             />
 
-            <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
               {results.rows.length} satır döndürüldü
             </Typography>
           </Paper>

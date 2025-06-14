@@ -8,6 +8,11 @@
   <strong>Güçlü, Görsel ve Kullanımı Kolay Veritabanı Sorgu Aracı</strong>
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.1.0-blue" alt="Version 1.1.0" />
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License MIT" />
+</p>
+
 ## 📋 İçindekiler
 
 - [Proje Hakkında](#-proje-hakkında)
@@ -16,8 +21,7 @@
 - [Teknolojik Altyapı](#-teknolojik-altyapı)
 - [Kurulum](#-kurulum)
 - [Kullanım](#-kullanım)
-- [Ekran Görüntüleri](#-ekran-görüntüleri)
-- [Katkıda Bulunma](#-katkıda-bulunma)
+- [Sürüm Notları](#-sürüm-notları)
 - [Lisans](#-lisans)
 
 ## 🚀 Proje Hakkında
@@ -38,6 +42,7 @@ SorguNeydi, farklı veritabanı sistemlerine tek bir arayüzden erişim sağlaya
   - Manuel SQL sorguları yazma ve çalıştırma
   - Sorgu sonuçlarını tablo formatında görüntüleme
   - Hata yönetimi ve loglama
+  - Tek tıkla sorgu ve sonuçları temizleme
 
 - **Veritabanı Şema Görüntüleme**
   - Tabloları listeleme
@@ -50,6 +55,7 @@ SorguNeydi, farklı veritabanı sistemlerine tek bir arayüzden erişim sağlaya
   - Filtreleme koşulları ekleme (WHERE)
   - Sıralama kriterleri belirleme (ORDER BY)
   - Gruplama işlemleri yapma (GROUP BY)
+  - SQL fonksiyonları (COUNT, SUM, AVG, vb.)
 
 ### İleri Düzey Özellikler
 
@@ -66,9 +72,16 @@ SorguNeydi, farklı veritabanı sistemlerine tek bir arayüzden erişim sağlaya
   - WHERE koşulları oluşturma
   - Farklı operatörler ile filtre ekleme (=, >, <, LIKE, vb.)
 
+- **SQL Fonksiyonları**
+  - Toplama fonksiyonları (COUNT, SUM, AVG, MIN, MAX)
+  - Metin işleme fonksiyonları (CONCAT, SUBSTRING, vb.)
+  - Tarih işleme fonksiyonları
+  - Koşullu ifadeler (CASE WHEN)
+
 - **Kullanıcı Arayüzü**
   - Çoklu sekme ile farklı sorgu özelliklerine erişim
   - Sürükle-bırak etkileşimleri
+  - Responsive tasarım (mobil uyumluluk)
   - Modern ve kullanıcı dostu arayüz (Material UI)
 
 ## 💾 Desteklenen Veritabanları
@@ -98,50 +111,73 @@ SorguNeydi aşağıdaki veritabanı sistemlerini desteklemektedir:
 - **React Query** - Veri yönetimi
 - **React Syntax Highlighter** - SQL sözdizimi vurgulama
 
-## 📦 Kurulum
+## 📦 Kurulum ve Başlatma
 
-### Gereksinimler
-- Node.js (v14 veya üzeri)
-- npm veya yarn
-- Desteklenen veritabanlarından en az biri
+### İlk Kurulum
 
-### Adımlar
+Projeyi ilk kez kurarken tüm bağımlılıkları yüklemek için:
 
-1. Depoyu klonlayın:
 ```bash
-git clone https://github.com/kullaniciadi/SorguNeydi.git
-cd SorguNeydi
+# Ana dizinde
+npm run install-all
 ```
 
-2. Bağımlılıkları yükleyin:
-```bash
-# Backend bağımlılıkları
-cd server
-npm install
+Bu komut, ana proje, server ve client için tüm gerekli bağımlılıkları otomatik olarak yükleyecektir.
 
-# Frontend bağımlılıkları
-cd ../client
-npm install
-```
+### Veritabanı Kurulumu
 
-3. Çevre değişkenlerini ayarlayın:
-```bash
-# server klasöründe .env dosyası oluşturun
-cd ../server
-cp .env.example .env
-```
+PostgreSQL veritabanını yapılandırın:
 
-4. Uygulamayı başlatın:
+1. PostgreSQL'i yükleyin ve çalıştırın
+2. `sorguneydi` adında yeni bir veritabanı oluşturun
+3. Server klasöründeki `.env` dosyasında veritabanı bağlantı bilgilerini düzenleyin (veya server/config/db.js dosyasındaki ayarları güncelleyin)
+
+### Geliştirme Modunda Çalıştırma
+
+Hem backend hem frontend'i geliştirme modunda eş zamanlı çalıştırmak için:
+
 ```bash
-# Backend sunucusunu başlatın
+# Ana dizinde
 npm run dev
+```
 
-# Yeni bir terminal açın ve frontend'i başlatın
-cd ../client
+Bu komut:
+- Backend'i `http://localhost:5001` adresinde
+- Frontend'i `http://localhost:3000` adresinde başlatacaktır
+
+### Yalnızca Backend'i Çalıştırma
+
+```bash
+# Ana dizinde
+npm run server
+
+# VEYA server klasöründe
+cd server
+npm run dev
+```
+
+### Yalnızca Frontend'i Çalıştırma
+
+```bash
+# Ana dizinde
+npm run client
+
+# VEYA client klasöründe
+cd client
 npm start
 ```
 
-5. Tarayıcınızı açın ve şu adrese gidin: `http://localhost:3000`
+### Prodüksiyon için Build
+
+```bash
+# Client build
+cd client
+npm run build
+
+# Tüm uygulamayı çalıştırma (backend + frontend build)
+cd ..
+npm start
+```
 
 ## 🖥️ Kullanım
 
@@ -154,6 +190,7 @@ npm start
    - Bağlantı listesinden bir veritabanı bağlantısı seçin
    - SQL sorgunuzu yazın veya görsel sorgu oluşturucuyu kullanın
    - "Çalıştır" düğmesine tıklayın ve sonuçları görüntüleyin
+   - İstenirse "Temizle" düğmesi ile sorgu ve sonuçları temizleyin
 
 3. **Şema Görüntüleme**:
    - Sol paneldeki ağaç yapısını kullanarak veritabanı şemasını keşfedin
@@ -165,26 +202,21 @@ npm start
    - Sütunları seçin, join işlemleri ekleyin, filtreler belirleyin
    - Otomatik oluşturulan SQL kodunu görüntüleyin ve çalıştırın
 
-## 📸 Ekran Görüntüleri
+## 📝 Sürüm Notları
 
-![Ana Ekran](./docs/images/main-screen.png)
-*Ana ekran ve bağlantı yönetimi*
+### Versiyon 1.1.0 (Güncel)
+- SQL Fonksiyonları eklendi (COUNT, SUM, AVG, MIN, MAX, vb.)
+- Responsive tasarım iyileştirmeleri yapıldı
+- Sorgu temizleme butonu eklendi
+- Arayüz boşlukları optimize edildi
+- WHERE filtreleme tamamlandı
 
-![Görsel Sorgu Oluşturucu](./docs/images/query-builder.png)
-*Görsel sorgu oluşturma arayüzü*
-
-![Sorgu Sonuçları](./docs/images/query-results.png)
-*Sorgu sonuçları görüntüleme*
-
-## 🤝 Katkıda Bulunma
-
-SorguNeydi projesine katkıda bulunmak isterseniz:
-
-1. Bu depoyu forklayın
-2. Özellik dalınızı oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: Add amazing feature'`)
-4. Dalınıza push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
+### Versiyon 1.0.0
+- İlk kararlı sürüm
+- PostgreSQL ve MySQL desteği
+- Temel sorgu oluşturma özellikleri
+- Bağlantı yönetimi
+- Görsel JOIN, ORDER BY, GROUP BY desteği
 
 ## 📄 Lisans
 

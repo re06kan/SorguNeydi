@@ -11,6 +11,7 @@ import {
 import JoinBuilder from '../JoinBuilder';
 import GroupByBuilder from '../GroupByBuilder';
 import OrderByBuilder from '../OrderByBuilder';
+import AggregateFunctions from '../AggregateFunctions';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,8 +48,9 @@ const AdvancedQueryTools = ({
   groupByColumns,
   onGroupByChange,
   orderByColumns,
-  onOrderByChange, // Yeni ekledik
-  functionExpressions
+  onOrderByChange,
+  functionExpressions,
+  onFunctionExpressionsChange
 }) => {
   const [tabValue, setTabValue] = useState(0);
   const [showFeatureAlert, setShowFeatureAlert] = useState(false);
@@ -67,7 +69,7 @@ const AdvancedQueryTools = ({
   };
 
   return (
-    <Paper sx={{ mb: 3, position: 'relative' }}>
+    <Paper sx={{ mb: 1, position: 'relative' }}>
       {showFeatureAlert && (
         <Alert
           severity="info"
@@ -87,7 +89,14 @@ const AdvancedQueryTools = ({
       )}
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabValue} onChange={handleTabChange} aria-label="query tools tabs">
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          aria-label="query tools tabs"
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+        >
           <Tab label="Tablo Birleştirme (JOIN)" />
           <Tab label="Gruplama (GROUP BY)" />
           <Tab label="Sıralama (ORDER BY)" />
@@ -129,39 +138,14 @@ const AdvancedQueryTools = ({
       </TabPanel>
 
       <TabPanel value={tabValue} index={3}>
-        <Box sx={{ mb: 3 }}>
-          <Alert severity="info" sx={{ mb: 2 }}>
-            SQL fonksiyonları ile veriler üzerinde çeşitli hesaplamalar ve dönüşümler yapabilirsiniz. Bu özellik tam olarak uygulandığında COUNT, SUM, AVG, CASE WHEN gibi ifadeleri görsel olarak oluşturabileceksiniz.
-          </Alert>
-
-          <Typography variant="subtitle1" gutterBottom>
-            SQL Fonksiyonları ile Neler Yapabilirsiniz?
-          </Typography>
-
-          <Typography variant="body2" paragraph>
-            • Toplama fonksiyonları: COUNT, SUM, AVG, MIN, MAX
-          </Typography>
-
-          <Typography variant="body2" paragraph>
-            • Metin işleme: CONCAT, LENGTH, SUBSTRING
-          </Typography>
-
-          <Typography variant="body2" paragraph>
-            • Tarih işlemleri: NOW, DATE_FORMAT, DATEDIFF
-          </Typography>
-
-          <Typography variant="body2" paragraph>
-            • Koşullu ifadeler: CASE WHEN ... THEN ... ELSE ... END
-          </Typography>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => handleFeatureClick('Fonksiyon')}
-          >
-            Fonksiyon Ekle
-          </Button>
-        </Box>
+        <AggregateFunctions
+          functionExpressions={functionExpressions}
+          setFunctionExpressions={onFunctionExpressionsChange}
+          tables={tables}
+          tableColumns={tableColumns}
+          fetchTableColumns={fetchTableColumns}
+          updateQueryWithFunctions={updateQueryWithFunctions}
+        />
       </TabPanel>
     </Paper>
   );
